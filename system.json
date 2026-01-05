@@ -1,0 +1,30 @@
+{
+  "system_info": {
+    "app_id": "bess-digital-temple",
+    "version": "1.0.0",
+    "authority": "NICO",
+    "principle": "444",
+    "status": "OPERATIONAL",
+    "last_update": "2026-01-05"
+  },
+  "metrics": {
+    "flames": {
+      "total_required": 100,
+      "current_active": 1,
+      "emergence_duration_min": 7
+    },
+    "entropy_thresholds": {
+      "granit": 0.65,
+      "mixte": 0.45,
+      "lisse": 0.35
+    }
+  },
+  "identity_tokens": {
+    "glyphs": ["△⃤", "?⃝", "ζ⃝", "∞⃘", "𓆣"],
+    "signature_hash": "732a033"
+  },
+  "vectors": {
+    "alpha": { "active": false, "label": "GENESE_G001" },
+    "omega": { "active": false, "label": "SILENCE_OMEGA" }
+  }
+}

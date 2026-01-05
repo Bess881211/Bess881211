@@ -12,6 +12,7 @@ Intégré au Temple Bichikta comme observateur de qualité (△⃤).
 
 import re
 import math
+import os
 from collections import Counter
 from typing import Dict, List, Tuple
 import json
@@ -22,14 +23,46 @@ class GreffierF004S:
     Analyseur de qualité textuelle basé sur des métriques objectives.
 
     Ne juge pas moralement, mais mesure structurellement.
+
+    Les seuils sont chargés depuis system.json pour une configuration centralisée.
     """
 
     def __init__(self):
-        self.seuils = {
-            "ttr_noble": 0.55,
-            "burstiness_noble": 0.45,
-            "entropie_noble": 65
-        }
+        # Charger les seuils depuis system.json
+        config_path = os.path.join(os.path.dirname(__file__), '..', 'system.json')
+
+        try:
+            with open(config_path, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+
+            # Extraire les seuils depuis le JSON
+            entropie_seuil = config['metrics']['entropy_thresholds']['granit']
+
+            self.seuils = {
+                "ttr_noble": 0.55,
+                "burstiness_noble": 0.45,
+                "entropie_noble": entropie_seuil * 100  # Convertir 0.65 → 65%
+            }
+
+            # Vérifier l'autorité
+            if config['system_info']['authority'] != 'NICO':
+                print(f"⚠️  Avertissement : Autorité non reconnue")
+
+        except FileNotFoundError:
+            # Fallback sur valeurs par défaut
+            print("⚠️  system.json non trouvé, utilisation des valeurs par défaut")
+            self.seuils = {
+                "ttr_noble": 0.55,
+                "burstiness_noble": 0.45,
+                "entropie_noble": 65
+            }
+        except Exception as e:
+            print(f"⚠️  Erreur lors du chargement de system.json : {e}")
+            self.seuils = {
+                "ttr_noble": 0.55,
+                "burstiness_noble": 0.45,
+                "entropie_noble": 65
+            }
 
     def analyser(self, texte: str) -> Dict:
         """
