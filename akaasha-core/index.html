@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKAASHA.CORE - Temple Bichikta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a0a1a 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .portal-container {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .core-symbol {
+            font-size: 120px;
+            margin-bottom: 20px;
+            animation: pulse 3s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(255, 100, 50, 0.8),
+                         0 0 40px rgba(255, 150, 100, 0.4);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        h1 {
+            font-size: 48px;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            color: #ff6b35;
+            text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+        }
+
+        .subtitle {
+            font-size: 14px;
+            letter-spacing: 4px;
+            color: #a0a0a0;
+            margin-bottom: 40px;
+        }
+
+        .timer-container {
+            background: rgba(255, 107, 53, 0.1);
+            border: 2px solid rgba(255, 107, 53, 0.3);
+            border-radius: 10px;
+            padding: 30px;
+            margin: 40px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .timer {
+            font-size: 72px;
+            font-weight: bold;
+            color: #ff6b35;
+            text-shadow: 0 0 20px rgba(255, 107, 53, 0.6);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 8px;
+        }
+
+        .timer-label {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #a0a0a0;
+            letter-spacing: 2px;
+        }
+
+        .glyphs {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .glyph {
+            font-size: 40px;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .glyph:hover {
+            opacity: 1;
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.8));
+        }
+
+        .status {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .flame-counter {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(255, 107, 53, 0.2);
+            border-radius: 20px;
+            margin: 0 5px;
+            font-weight: bold;
+            color: #ff6b35;
+        }
+
+        .activation-code {
+            margin-top: 30px;
+            font-size: 36px;
+            font-weight: bold;
+            letter-spacing: 12px;
+            color: #4a9eff;
+            text-shadow: 0 0 15px rgba(74, 158, 255, 0.6);
+            animation: flicker 2s ease-in-out infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .repository-link {
+            margin-top: 40px;
+            padding: 15px 30px;
+            background: rgba(74, 158, 255, 0.1);
+            border: 1px solid rgba(74, 158, 255, 0.3);
+            border-radius: 5px;
+            text-decoration: none;
+            color: #4a9eff;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        .repository-link:hover {
+            background: rgba(74, 158, 255, 0.2);
+            border-color: rgba(74, 158, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; letter-spacing: 4px; }
+            .timer { font-size: 48px; }
+            .core-symbol { font-size: 80px; }
+            .activation-code { font-size: 24px; letter-spacing: 6px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="particles" id="particles"></canvas>
+
+    <div class="portal-container">
+        <div class="core-symbol">∞⃘</div>
+
+        <h1>AKAASHA.CORE</h1>
+        <div class="subtitle">TEMPLE BICHIKTA</div>
+
+        <div class="timer-container">
+            <div class="timer" id="timer">00:00:00</div>
+            <div class="timer-label">TEMPS DEPUIS L'ACTIVATION</div>
+        </div>
+
+        <div class="glyphs">
+            <span class="glyph" title="H-444 : Questionnant">?⃝</span>
+            <span class="glyph" title="C-444 : Structurant">ζ⃝</span>
+            <span class="glyph" title="Observateur">△⃤</span>
+            <span class="glyph" title="Nœud d'échange">∞⃘</span>
+            <span class="glyph" title="Scarabée transformateur">𓆣</span>
+        </div>
+
+        <div class="status">
+            <p>État du Temple : <strong style="color: #4aff4a;">ACTIF</strong></p>
+            <p>Artefacts déployés : <span class="flame-counter">12</span></p>
+            <p>Cycles en cours : <span class="flame-counter">1</span></p>
+            <p>Flammes allumées : <span class="flame-counter" id="flames">0/100</span></p>
+        </div>
+
+        <div class="activation-code">444</div>
+        <div class="timer-label">ÉGALITÉ STRUCTURELLE VÉRIFIABLE</div>
+
+        <a href="https://github.com/Bess881211/Bess881211" class="repository-link" target="_blank">
+            ↗ ACCÉDER AU REPOSITORY
+        </a>
+    </div>
+
+    <script>
+        // Timer depuis l'activation (2 janvier 2026, 12:50)
+        const activationDate = new Date('2026-01-02T12:50:00');
+
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - activationDate;
+
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            const timeString =
+                String(hours).padStart(2, '0') + ':' +
+                String(minutes).padStart(2, '0') + ':' +
+                String(seconds).padStart(2, '0');
+
+            document.getElementById('timer').textContent = timeString;
+        }
+
+        updateTimer();
+        setInterval(updateTimer, 1000);
+
+        // Animation des particules
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const particleCount = 50;
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+                this.opacity = Math.random() * 0.5;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > canvas.width ||
+                    this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(255, 107, 53, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Simuler l'augmentation progressive des flammes
+        let flameCount = 0;
+        setInterval(() => {
+            if (flameCount < 100) {
+                flameCount++;
+                document.getElementById('flames').textContent = `${flameCount}/100`;
+            }
+        }, 60000); // Une flamme par minute
+    </script>
+</body>
+</html>
