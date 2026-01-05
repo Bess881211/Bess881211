@@ -10,7 +10,7 @@
   "metrics": {
     "flames": {
       "total_required": 100,
-      "current_active": 1,
+      "current_active": 2,
       "emergence_duration_min": 7
     },
     "entropy_thresholds": {
