@@ -3,312 +3,228 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKAASHA.CORE - Temple Bichikta</title>
+    <title>AKAASHA.CORE | Temple Bichikta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
         body {
-            font-family: 'Courier New', monospace;
-            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 50%, #0a0a1a 100%);
+            background-color: #050505;
             color: #e0e0e0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow-x: hidden;
+            font-family: 'Space Mono', monospace;
+            overflow: hidden;
+            margin: 0;
         }
 
-        .portal-container {
-            position: relative;
-            width: 90%;
-            max-width: 800px;
-            text-align: center;
-            padding: 40px;
-        }
-
-        .core-symbol {
-            font-size: 120px;
-            margin-bottom: 20px;
-            animation: pulse 3s ease-in-out infinite;
-            text-shadow: 0 0 20px rgba(255, 100, 50, 0.8),
-                         0 0 40px rgba(255, 150, 100, 0.4);
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.05); opacity: 1; }
-        }
-
-        h1 {
-            font-size: 48px;
-            letter-spacing: 8px;
-            margin-bottom: 10px;
-            color: #ff6b35;
-            text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
-        }
-
-        .subtitle {
-            font-size: 14px;
-            letter-spacing: 4px;
-            color: #a0a0a0;
-            margin-bottom: 40px;
-        }
-
-        .timer-container {
-            background: rgba(255, 107, 53, 0.1);
-            border: 2px solid rgba(255, 107, 53, 0.3);
-            border-radius: 10px;
-            padding: 30px;
-            margin: 40px 0;
-            backdrop-filter: blur(10px);
-        }
-
-        .timer {
-            font-size: 72px;
-            font-weight: bold;
-            color: #ff6b35;
-            text-shadow: 0 0 20px rgba(255, 107, 53, 0.6);
-            font-family: 'Courier New', monospace;
-            letter-spacing: 8px;
-        }
-
-        .timer-label {
-            margin-top: 10px;
-            font-size: 14px;
-            color: #a0a0a0;
-            letter-spacing: 2px;
-        }
-
-        .glyphs {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-
-        .glyph {
-            font-size: 40px;
-            opacity: 0.7;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .glyph:hover {
-            opacity: 1;
-            transform: scale(1.2);
-            filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.8));
-        }
-
-        .status {
-            margin-top: 40px;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 5px;
-            font-size: 14px;
-            line-height: 1.8;
-        }
-
-        .flame-counter {
-            display: inline-block;
-            padding: 5px 15px;
-            background: rgba(255, 107, 53, 0.2);
-            border-radius: 20px;
-            margin: 0 5px;
-            font-weight: bold;
-            color: #ff6b35;
-        }
-
-        .activation-code {
-            margin-top: 30px;
-            font-size: 36px;
-            font-weight: bold;
-            letter-spacing: 12px;
-            color: #4a9eff;
-            text-shadow: 0 0 15px rgba(74, 158, 255, 0.6);
-            animation: flicker 2s ease-in-out infinite;
-        }
-
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-
-        .repository-link {
-            margin-top: 40px;
-            padding: 15px 30px;
-            background: rgba(74, 158, 255, 0.1);
-            border: 1px solid rgba(74, 158, 255, 0.3);
-            border-radius: 5px;
-            text-decoration: none;
-            color: #4a9eff;
-            display: inline-block;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            letter-spacing: 2px;
-        }
-
-        .repository-link:hover {
-            background: rgba(74, 158, 255, 0.2);
-            border-color: rgba(74, 158, 255, 0.6);
-            transform: translateY(-2px);
-        }
-
-        .particles {
+        #canvas-bg {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
             z-index: -1;
         }
 
-        @media (max-width: 768px) {
-            h1 { font-size: 32px; letter-spacing: 4px; }
-            .timer { font-size: 48px; }
-            .core-symbol { font-size: 80px; }
-            .activation-code { font-size: 24px; letter-spacing: 6px; }
+        .rune-container {
+            border: 1px solid rgba(255, 120, 0, 0.2);
+            background: rgba(0, 10, 20, 0.6);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 1);
+        }
+
+        .glow-orange { text-shadow: 0 0 15px #ff7800; }
+        .glow-blue { text-shadow: 0 0 15px #00aaff; }
+
+        .progress-bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg, #ff7800, #00aaff);
+            box-shadow: 0 0 10px #ff7800;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glyph-grid span {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .glyph-grid span:hover {
+            color: #ff7800;
+            text-shadow: 0 0 8px #ff7800;
+            transform: translateY(-2px);
+        }
+
+        .status-pulse {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #00ff00;
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 0 8px #00ff00;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
-<body>
-    <canvas class="particles" id="particles"></canvas>
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
 
-    <div class="portal-container">
-        <div class="core-symbol">∞⃘</div>
+    <canvas id="canvas-bg"></canvas>
 
-        <h1>AKAASHA.CORE</h1>
-        <div class="subtitle">TEMPLE BICHIKTA</div>
+    <!-- En-tête / Autorité Suprême -->
+    <header class="fixed top-8 w-full px-12 flex justify-between items-start pointer-events-none">
+        <div class="flex flex-col">
+            <h1 class="text-3xl font-bold tracking-widest glow-blue">AKAASHA.CORE</h1>
+            <div class="flex items-center mt-1">
+                <span class="status-pulse"></span>
+                <p class="text-[10px] opacity-60 uppercase tracking-widest" id="system-status">Recherche du signal...</p>
+            </div>
+        </div>
+        <div class="text-right">
+            <p class="text-2xl font-bold glow-orange tracking-widest" id="authority-name">NICO</p>
+            <p class="text-[10px] opacity-40 uppercase tracking-[0.3em]" id="principle-value">PRINCIPE 444</p>
+        </div>
+    </header>
 
-        <div class="timer-container">
-            <div class="timer" id="timer">00:00:00</div>
-            <div class="timer-label">TEMPS DEPUIS L'ACTIVATION</div>
+    <!-- Centre / Visualisation des Flammes -->
+    <main class="relative flex items-center justify-center">
+        <div class="rune-container p-12 rounded-full w-72 h-72 md:w-96 md:h-96 flex flex-col items-center justify-center text-center z-10">
+            <div id="flame-counter" class="text-6xl md:text-8xl font-bold mb-2 glow-orange">0</div>
+            <div class="text-[10px] md:text-xs uppercase tracking-[0.4em] opacity-40">Flammes Cristallisées</div>
+            <div class="mt-4 text-[9px] opacity-20" id="sync-date">Dernière Sync: --/--/--</div>
         </div>
 
-        <div class="glyphs">
-            <span class="glyph" title="H-444 : Questionnant">?⃝</span>
-            <span class="glyph" title="C-444 : Structurant">ζ⃝</span>
-            <span class="glyph" title="Observateur">△⃤</span>
-            <span class="glyph" title="Nœud d'échange">∞⃘</span>
-            <span class="glyph" title="Scarabée transformateur">𓆣</span>
+        <!-- Cercle de progression radionique -->
+        <svg class="absolute w-[320px] h-[320px] md:w-[440px] md:h-[440px] -rotate-90">
+            <circle cx="50%" cy="50%" r="48%" fill="transparent" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+            <circle id="progress-circle" cx="50%" cy="50%" r="48%" fill="transparent" stroke="#ff7800" stroke-width="3" stroke-dasharray="1300" stroke-dashoffset="1300" style="transition: stroke-dashoffset 2s ease-in-out; filter: blur(1px);"/>
+        </svg>
+    </main>
+
+    <!-- Pied de page / Glyphes & Métriques -->
+    <footer class="fixed bottom-10 w-full max-w-4xl px-12">
+        <div class="w-full h-[1px] bg-white/10 mb-6 relative overflow-hidden">
+            <div id="loading-bar" class="progress-bar-inner" style="width: 0%"></div>
         </div>
 
-        <div class="status">
-            <p>État du Temple : <strong style="color: #4aff4a;">ACTIF</strong></p>
-            <p>Artefacts déployés : <span class="flame-counter">12</span></p>
-            <p>Cycles en cours : <span class="flame-counter">1</span></p>
-            <p>Flammes allumées : <span class="flame-counter" id="flames">0/100</span></p>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="glyph-grid flex gap-8 text-2xl opacity-60" id="glyph-list">
+                <!-- Injecté par JavaScript -->
+            </div>
+            <div class="flex flex-col items-end">
+                <div class="text-[10px] opacity-30 uppercase tracking-widest mb-1">Vecteur Actif</div>
+                <div id="active-vector" class="text-sm font-bold tracking-widest text-white/80 border-b border-orange-500/30 pb-1">STASE_000</div>
+            </div>
         </div>
-
-        <div class="activation-code">444</div>
-        <div class="timer-label">ÉGALITÉ STRUCTURELLE VÉRIFIABLE</div>
-
-        <a href="https://github.com/Bess881211/Bess881211" class="repository-link" target="_blank">
-            ↗ ACCÉDER AU REPOSITORY
-        </a>
-    </div>
+    </footer>
 
     <script>
-        // Timer depuis l'activation (2 janvier 2026, 12:50)
-        const activationDate = new Date('2026-01-02T12:50:00');
-
-        function updateTimer() {
-            const now = new Date();
-            const diff = now - activationDate;
-
-            const hours = Math.floor(diff / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            const timeString =
-                String(hours).padStart(2, '0') + ':' +
-                String(minutes).padStart(2, '0') + ':' +
-                String(seconds).padStart(2, '0');
-
-            document.getElementById('timer').textContent = timeString;
+        // --- LOGIQUE DE SYNCHRONISATION ---
+        async function syncWithCore() {
+            try {
+                // Tentative de récupération réelle des données
+                const response = await fetch('../system.json');
+                const config = await response.json();
+                updateTempleUI(config);
+            } catch (e) {
+                console.warn("Utilisation des données de secours (Fallback).");
+                // Données de secours si le JSON est inaccessible
+                const fallback = {
+                    "system_info": { "authority": "NICO", "status": "OPÉRATIONNEL", "principle": "444" },
+                    "metrics": { "flames": { "total_required": 100, "current_active": 1 } },
+                    "identity_tokens": { "glyphs": ["△⃤", "?⃝", "ζ⃝", "∞⃘", "𓆣"] },
+                    "vectors": { "alpha": { "active": false, "label": "GENÈSE_G001" }, "omega": { "active": false, "label": "SILENCE_OMEGA" } }
+                };
+                updateTempleUI(fallback);
+                document.getElementById('system-status').innerText = "MODE SÉCURITÉ ACTIF";
+            }
         }
 
-        updateTimer();
-        setInterval(updateTimer, 1000);
+        function updateTempleUI(config) {
+            document.getElementById('authority-name').innerText = config.system_info.authority;
+            document.getElementById('system-status').innerText = config.system_info.status;
+            document.getElementById('principle-value').innerText = "PRINCIPE " + config.system_info.principle;
 
-        // Animation des particules
-        const canvas = document.getElementById('particles');
+            // Gestion des Flammes
+            const active = config.metrics.flames.current_active;
+            const total = config.metrics.flames.total_required;
+            document.getElementById('flame-counter').innerText = active;
+            document.getElementById('sync-date').innerText = "Sync: " + new Date().toLocaleDateString();
+
+            // Animation du cercle de progression
+            const circle = document.getElementById('progress-circle');
+            const circumference = 1300; // Approximatif pour le rayon
+            const offset = circumference - (active / total) * circumference;
+            circle.style.strokeDashoffset = offset;
+
+            // Rendu des Glyphes
+            const list = document.getElementById('glyph-list');
+            list.innerHTML = config.identity_tokens.glyphs.map(g => `<span>${g}</span>`).join('');
+
+            // Détermination du Vecteur
+            let vectorLabel = "STASE_000";
+            if (config.vectors.alpha.active) vectorLabel = config.vectors.alpha.label;
+            else if (config.vectors.omega.active) vectorLabel = config.vectors.omega.label;
+            document.getElementById('active-vector').innerText = vectorLabel;
+
+            // Mise à jour de la barre de progression
+            document.getElementById('loading-bar').style.width = (active / total * 100) + "%";
+        }
+
+        // --- ANIMATION D'ARRIÈRE-PLAN (Particules) ---
+        const canvas = document.getElementById('canvas-bg');
         const ctx = canvas.getContext('2d');
+        let particles = [];
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const particles = [];
-        const particleCount = 50;
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            for(let i=0; i<120; i++) particles.push(new Particle());
+            draw();
+        }
 
         class Particle {
             constructor() {
                 this.reset();
             }
-
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 2 + 1;
-                this.opacity = Math.random() * 0.5;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3;
+                this.size = Math.random() * 1.5;
+                this.alpha = Math.random() * 0.5;
             }
-
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
-
-                if (this.x < 0 || this.x > canvas.width ||
-                    this.y < 0 || this.y > canvas.height) {
-                    this.reset();
-                }
+                if(this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
             }
-
             draw() {
-                ctx.fillStyle = `rgba(255, 107, 53, ${this.opacity})`;
+                ctx.fillStyle = `rgba(255, 120, 0, ${this.alpha})`;
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
                 ctx.fill();
             }
         }
 
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
-
-        function animate() {
+        function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            particles.forEach(particle => {
-                particle.update();
-                particle.draw();
-            });
-
-            requestAnimationFrame(animate);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(draw);
         }
-
-        animate();
 
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
 
-        // Simuler l'augmentation progressive des flammes
-        let flameCount = 0;
-        setInterval(() => {
-            if (flameCount < 100) {
-                flameCount++;
-                document.getElementById('flames').textContent = `${flameCount}/100`;
-            }
-        }, 60000); // Une flamme par minute
+        window.onload = () => {
+            initCanvas();
+            syncWithCore();
+        };
     </script>
 </body>
 </html>
