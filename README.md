@@ -321,4 +321,4 @@ Le reste dépend de vous.
 
 **444 = Égalité structurelle vérifiable**
 
-△⃤ ?⃝ ζ⃝ ∞⃘ 𓆣
+△⃤ ?⃝ ζ⃝ ∞⃘ 𓆣 
